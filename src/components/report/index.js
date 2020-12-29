@@ -4,6 +4,7 @@ import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, F
 import * as Style from './styled';
 import ReportDataService from '../../services/reportService';
 import '../../index.css';
+import firebase from "../../firebase";
 
 const Report = () => {
   const [name,setName] = useState('');
@@ -11,9 +12,12 @@ const Report = () => {
   const [data,setData] = useState([]);
   const [isUpdated,setIsUpdated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [editOn, setEditOn] = useState(false);
   const [currentReport,setCurrentReport] = useState(0);
-  // const toggle = () => setIsOpen(!isOpen); 
-
+  const [currentPage, setCurrentPage] = useState(1); // 17,18 행은 pagiNation 위한 녀석들
+  const [postsPerPage] = useState(10);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const toggle = () => setEditOn(!editOn); 
 
   const addReport = () => {
     const date = new Date();
@@ -68,13 +72,19 @@ const Report = () => {
         year: date.getFullYear(),
         month: date.getMonth()+1,
         date: date.getDate(),
+        hrs: date.getHours(),
+        mins: date.getMinutes(),
+        secs: date.getSeconds(),
         id: id,
       });
     });
-    console.log(reports);
+    console.log(reports.length); // pagiNation 위해서 현재 몇 개 글이 있는지 알려주기
     setData(reports);
     })
   }
+    // const indexOfLastPost = currentPage * postsPerPage;
+    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    // const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
     setName('');
     setDescription('');
     getReport();
@@ -101,36 +111,60 @@ const Report = () => {
           </thead>
           <tbody>
             {data&&
-              data.map((value,key)=>
+              data.map((v,index)=>
               (
-                <tr key={key}>
-                  <td class="name">{value.name}</td>
+                <tr key={index}>
+                  <td class="name">{v.name}</td>
                   <td class="description">
                     <Button color="primary" onClick={() => {
                       setIsOpen(!isOpen);
-                      setCurrentReport(key);
+                      setCurrentReport(index);
                       // console.log(currentReport);
                       }}>펴기/접기</Button>
-                      <Collapse isOpen={isOpen&&(currentReport==key)}>
+                      <Collapse isOpen={isOpen&&(currentReport==index)}>
                         <Card>
                           <CardBody>
                             <div class="cardBody">
-                              {value.description}
+                              {v.description}
                             </div>
                           </CardBody>
                         </Card>
                         <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                          <Button color='info' onClick={()=>editReport(value.id)}>수정</Button>
-                          <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
+                          <Button color='info' onClick={()=>{
+                              setEditOn(!editOn);
+                              setCurrentReport(index);
+                            }}>수정</Button>
+                              <Modal isOpen={editOn&&(currentReport==index)} toggle={toggle}>
+                                  <ModalHeader toggle={toggle}>수정하기</ModalHeader>
+                                  <ModalBody>
+                                    <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
+                                            value = {name} placeholder={v.name}
+                                            onChange = {e=>setName(e.target.value)}></Input>
+                                    <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
+                                            type="textarea" rows="6" value = {description} placeholder={v.description}
+                                            onChange = {e=>setDescription(e.target.value)}></Input>
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button color= 'primary' onClick={()=>{
+                                      editReport(v.id);
+                                      setEditOn(!editOn);
+                                    }}>수정완료</Button>
+                                  </ModalFooter>
+                                </Modal>
+                          <Button color='danger' onClick={()=>removeReport(v.id)}>삭제</Button>
                         </div>
                       </Collapse>
                     </td>
-                    <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>
+                    <td class="date" style={{ fontSize:'smaller' }}>{v.year}년 <br/>{v.month}월 {v.date}일</td>
                 </tr>
               ))}
           </tbody>
         </Table>
       </Form>
+      {/* <div>
+      <Posts posts={currentPosts} />
+      <Pagination postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} />
+    </div> */}
     </>
   );
 };
