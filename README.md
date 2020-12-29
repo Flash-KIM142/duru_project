@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+```
+git add .
+git commit -m "message"
+git push -u origin master
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
