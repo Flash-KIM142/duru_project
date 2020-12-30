@@ -1,10 +1,11 @@
 // 요놈은 북지부 거 데이터
 import firebase from "../firebase";
-const db = firebase.collection("/Reports");
+const db = firebase.collection("Reports");
+// .orderBy("date", "desc");
 
 class ReportsDataService {
     getAll() {
-      return db;
+      return db.orderBy("date", "desc");
     }
   
     create(reports) {

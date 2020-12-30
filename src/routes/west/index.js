@@ -12,8 +12,9 @@ const West = () => {
     const [data,setData] = useState([]);
     const [isUpdated,setIsUpdated] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [editOn, setEditOn] = useState(false);
     const [currentReport,setCurrentReport] = useState(0);
-    // const toggle = () => setIsOpen(!isOpen);
+    const toggle = () => setEditOn(!editOn); 
 
 
     const addReport = () => {
@@ -127,7 +128,27 @@ const West = () => {
                             </CardBody>
                             </Card>
                             <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                                <Button color='info' onClick={()=>editReport(value.id)}>수정</Button>
+                            <Button color='info' onClick={()=>{
+                                setEditOn(!editOn);
+                                setCurrentReport(key);
+                                }}>수정</Button>
+                                    <Modal isOpen={editOn&&(currentReport==key)} toggle={toggle}>
+                                        <ModalHeader toggle={toggle}>수정하기</ModalHeader>
+                                        <ModalBody>
+                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
+                                                    value = {name} placeholder={value.name}
+                                                    onChange = {e=>setName(e.target.value)}></Input>
+                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
+                                                    type="textarea" rows="6" value = {description} placeholder={value.description}
+                                                    onChange = {e=>setDescription(e.target.value)}></Input>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button color= 'primary' onClick={()=>{
+                                            editReport(value.id);
+                                            setEditOn(!editOn);
+                                            }}>수정완료</Button>
+                                        </ModalFooter>
+                                        </Modal>
                                 <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
                             </div>
                         </Collapse>

@@ -1,9 +1,9 @@
 import firebase from "../firebase";
-const db = firebase.collection("/ReportsWest");
+const db = firebase.collection("ReportsWest");
 
 class ReportsDataService {
     getAll() {
-      return db;
+      return db.orderBy("date","desc");
     }
   
     create(reports) {

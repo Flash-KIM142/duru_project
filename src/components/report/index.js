@@ -1,4 +1,4 @@
-// 글쓰기 컴포넌트 // 롤링페이퍼 공지사항 형식 따라할 것
+// 글쓰기 컴포넌트 // 롤링페이퍼 공지사항 형식 따라할 것 // 사실상 북지부 Report Form 돼버림
 import React, { useEffect, useState } from 'react';
 import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import * as Style from './styled';
@@ -165,6 +165,7 @@ const Report = () => {
       <Posts posts={currentPosts} />
       <Pagination postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} />
     </div> */}
+
     </>
   );
 };
