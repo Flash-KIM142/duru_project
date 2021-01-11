@@ -5,8 +5,10 @@ import { BrowserRouter, Route, Link, Switch } from "react-router-dom"
 import ReportDataServiceSouth from '../../services/reportServiceSouth';
 import * as S from '../main/styled';
 import '../../index.css';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const South = () => {
+const South = ({history}) => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
@@ -19,34 +21,11 @@ const South = () => {
     const addReport = () => {
         const date = new Date();
         ReportDataServiceSouth.create({
-        name: name,
-        description: description,
-        date: date,
+            name: name,
+            description: description,
+            date: date,
         }).then(()=>{
         // console.log("Created new item successfully!");
-        setIsUpdated(true);
-        }).catch((err)=>{
-        console.log(err);
-        })
-    }
-
-    const removeReport = (id) => {
-        ReportDataServiceSouth.delete(id).then(()=>{
-        // console.log("Document successfully deleted!");
-        setIsUpdated(true);
-        }).catch((err)=>{
-        console.log(err);
-        })
-    }
-
-    const editReport = (id) => {
-        ReportDataServiceSouth.update(id,{
-        name: name,
-        description: description,
-        }).then(()=>{
-        // console.log("Document successfully edited!");
-        setName('');
-        setDescription('');
         setIsUpdated(true);
         }).catch((err)=>{
         console.log(err);
@@ -70,7 +49,7 @@ const South = () => {
                 id: id,
             });
         });
-        console.log(reports);
+        // console.log(reports);
         setData(reports);
         })
     }
@@ -87,6 +66,7 @@ const South = () => {
                     두루 캠퍼스 사역 보고
             </Link>
             <S.CampusName>남지부</S.CampusName>
+
         </S.HeadWrapper>
 
         <Form style={{ marginTop:"10px"}}>
@@ -95,67 +75,17 @@ const South = () => {
             <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
             </FormGroup>
             <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
-                <Button onClick={()=>addReport()}>제출</Button>
+                    <Button color='success' onClick={()=>{
+                        var check = prompt('password', '');
+                        if(check===process.env.REACT_APP_PASSWORD){
+                            history.push('/southAuth');
+                        } 
+                        else{
+                            alert('wrong password');
+                        }
+                    }}>Admin</Button>
+                <Button onClick={()=>{alert('성공적으로 제출됐습니다!'); addReport();}}>제출</Button>
             </div>
-            <Table style={{ marginTop: "30px" }}>
-            <thead>
-                <tr>
-                <th class="name">이름</th>
-                <th class="description">내용</th>
-                <th class="date">날짜</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data&&
-                data.map((value,key)=>
-                (
-                    <tr key={key}>
-                    <td class="name">{value.name}</td>
-                    <td >
-                        <Button color="primary" onClick={() => {
-                            setIsOpen(!isOpen);
-                            setCurrentReport(key);
-                            console.log(currentReport);
-                            }}>펴기/접기</Button>
-                        <Collapse isOpen={isOpen&&(currentReport==key)}>
-                            <Card>
-                                <CardBody class="cardBody">
-                                    <div class="cardBody">
-                                    {value.description}
-                                    </div>
-                                </CardBody>
-                            </Card>
-                            <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                            <Button color='info' onClick={()=>{
-                                setEditOn(!editOn);
-                                setCurrentReport(key);
-                                }}>수정</Button>
-                                    <Modal isOpen={editOn&&(currentReport==key)} toggle={toggle}>
-                                        <ModalHeader toggle={toggle}>수정하기</ModalHeader>
-                                        <ModalBody>
-                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
-                                                    value = {name} placeholder={value.name}
-                                                    onChange = {e=>setName(e.target.value)}></Input>
-                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
-                                                    type="textarea" rows="6" value = {description} placeholder={value.description}
-                                                    onChange = {e=>setDescription(e.target.value)}></Input>
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <Button color= 'primary' onClick={()=>{
-                                            editReport(value.id);
-                                            setEditOn(!editOn);
-                                            }}>수정완료</Button>
-                                        </ModalFooter>
-                                        </Modal>
-                                <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
-                            </div>
-                        </Collapse>
-                    </td>
-                    <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>
-                    </tr>
-                ))}
-            </tbody>
-            </Table>
         </Form>
         </>
     );

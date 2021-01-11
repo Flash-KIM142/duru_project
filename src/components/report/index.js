@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import * as Style from './styled';
+import { BrowserRouter, Route, Link, Switch, } from "react-router-dom"
 import ReportDataService from '../../services/reportService';
 import '../../index.css';
 import firebase from "../../firebase";
@@ -14,9 +15,6 @@ const Report = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editOn, setEditOn] = useState(false);
   const [currentReport,setCurrentReport] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1); // 17,18 행은 pagiNation 위한 녀석들
-  const [postsPerPage] = useState(10);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const toggle = () => setEditOn(!editOn); 
 
   const addReport = () => {
@@ -72,7 +70,7 @@ const Report = () => {
         year: date.getFullYear(),
         month: date.getMonth()+1,
         date: date.getDate(),
-        hrs: date.getHours(),
+        hrs: date.getHours(), // hrs, mins, secs 는 필요없어졌다.
         mins: date.getMinutes(),
         secs: date.getSeconds(),
         id: id,
@@ -82,9 +80,7 @@ const Report = () => {
     setData(reports);
     })
   }
-    // const indexOfLastPost = currentPage * postsPerPage;
-    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    // const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+
     setName('');
     setDescription('');
     getReport();
@@ -99,7 +95,13 @@ const Report = () => {
           <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
         </FormGroup>
         <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
-          <Button onClick={()=>addReport()}>제출</Button>
+          {/* <Button color='success' onClick={()=>alert('현재 준비 중인 기능입니다.')}>관리자</Button> */}
+          <Link to="/northAuth">
+            <Button color='success' onClick={()=>{
+                alert('관리자 페이지로 이동합니다.');
+              }}>관리자</Button>
+          </Link>
+          <Button onClick={()=>{alert('성공적으로 제출됐습니다!'); addReport();}}>제출</Button>
         </div>
         <Table style={{ marginTop: "30px" }}>
           <thead>
@@ -138,7 +140,7 @@ const Report = () => {
                                   <ModalHeader toggle={toggle}>수정하기</ModalHeader>
                                   <ModalBody>
                                     <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
-                                            value = {name} placeholder={v.name}
+                                            value = {name} placeholder={v.name} 
                                             onChange = {e=>setName(e.target.value)}></Input>
                                     <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
                                             type="textarea" rows="6" value = {description} placeholder={v.description}
@@ -160,12 +162,10 @@ const Report = () => {
               ))}
           </tbody>
         </Table>
+        <div style={{ textAlign:"center" }}>
+          {/* <Button onClick={()=>loadMore()}>Load More</Button> */}
+        </div>
       </Form>
-      {/* <div>
-      <Posts posts={currentPosts} />
-      <Pagination postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} />
-    </div> */}
-
     </>
   );
 };
