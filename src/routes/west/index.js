@@ -1,7 +1,7 @@
 // 홈화면에서 서지부 누르면 들어오게 되는 곳
 import React, { useEffect, useState } from 'react';
-import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom"
+import { Button, Input, Form, FormGroup } from 'reactstrap';
+import { Link } from "react-router-dom"
 import ReportDataServiceWest from '../../services/reportServiceWest';
 import * as S from '../main/styled';
 import '../../index.css';
@@ -11,13 +11,7 @@ dotenv.config();
 const West = ({history}) => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
-    const [data,setData] = useState([]);
     const [isUpdated,setIsUpdated] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const [editOn, setEditOn] = useState(false);
-    const [currentReport,setCurrentReport] = useState(0);
-    const toggle = () => setEditOn(!editOn); 
-
 
     const addReport = () => {
         const date = new Date();
@@ -34,30 +28,8 @@ const West = ({history}) => {
     }
 
     useEffect(()=>{
-        const getReport = () => {
-        let reports = [];
-        ReportDataServiceWest.getAll().get().then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-        let temp = doc.data();
-        let id  = doc.id;
-        let date = temp.date.toDate();
-        reports.push({
-            name: temp.name,
-            description: temp.description,
-            year: date.getFullYear(),
-            month: date.getMonth()+1,
-            date: date.getDate(),
-            id: id,
-        });
-        });
-        console.log(reports);
-        setData(reports);
-        })
-    }
-
         setName('');
         setDescription('');
-        getReport();
         setIsUpdated(false);
     },[isUpdated])
 
@@ -85,7 +57,14 @@ const West = ({history}) => {
                             alert('wrong password');
                         }
                     }}>Admin</Button>
-                <Button onClick={()=>{alert('성공적으로 제출됐습니다!'); addReport();}}>제출</Button>
+                <Button onClick={()=>{
+                    if(name.length<3 || description.length<3){
+                        alert('이름 또는 내용을 입력하지 않으셨습니다.');
+                    }
+                    else{
+                        alert('성공적으로 제출됐습니다!'); addReport();
+                    }
+                    }}>제출</Button>
             </div>
         </Form>
         </>

@@ -11,8 +11,7 @@ const SouthAuth = () => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
-    // const [lastVisible, setLastVisible] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [editOn, setEditOn] = useState(false);
@@ -45,7 +44,7 @@ const SouthAuth = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('ReportsSouth').orderBy("date", "desc").limit(2)
+        firebase.collection('ReportsSouth').orderBy("date", "desc").limit(5)
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();
@@ -61,88 +60,41 @@ const SouthAuth = () => {
                     id: id,
                 })
             })
-            // const lastReport = reports[reports.length -1];
-            // setLastReport(lastReport);
-            // console.log(lastReport);
-            // console.log(reports.length);
             setData(reports);
         });
 
         setName('');
         setDescription('');
         setIsUpdated(false);
-        setLoading(false);
     }, [isUpdated])
 
-    // useEffect(()=>{
-    //     if(!isCorrect){
-    //         var check = prompt('password', '');
-    //         console.log(check);
-    //         if(check==='1357'){
-    //             setIsCorrect(true);
-    //         }
-    //         else{
-    //             console.log('뒤로 가져야됨.');
-    //         }
-    //     } 
-    // },[])
-
     const loadMore = () => {
-        setLoading(true);
         let nextReports = [];
-        var first = firebase.collection('ReportsSouth').orderBy("date","desc").limit(2);
-        // const reportRef = firebase.collection('ReportsSouth').orderBy("date","desc").get();
-        // const lastReport = reportRef.docs[reportRef.docs.length - 1];
-        first.get().then((documentSnapshots)=>{
-            var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1].data();
-            // console.log(lastVisible.date);
-            // console.log(lastVisible);
 
-            firebase.collection('ReportsSouth').orderBy("date","desc").startAfter(lastVisible.date).limit(2).get().then((querySnapshot)=>{
-                querySnapshot.docs.forEach((doc)=>{
-                    let temp = doc.data();
-                    let id = doc.id;
-                    let date = temp.date.toDate();
+        firebase.collection('ReportsSouth').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
+            querySnapshot.docs.forEach((doc)=>{
+                let temp = doc.data();
+                let id = doc.id;
+                let date = temp.date.toDate();
 
-                    nextReports.push({
-                        name: temp.name,
-                        description: temp.description,
-                        year: date.getFullYear(),
-                        month: date.getMonth()+1,
-                        date: date.getDate(),
-                        id: id,
-                    })
-                    console.log(nextReports);
+                nextReports.push({
+                    name: temp.name,
+                    description: temp.description,
+                    year: date.getFullYear(),
+                    month: date.getMonth()+1,
+                    date: date.getDate(),
+                    id: id,
                 })
-                // var lastReport = nextReports[nextReports.length -1];
-                // console.log(lastReport);
-                setData((data) => [...data, ...nextReports]);
-                lastVisible = nextReports[nextReports.length -1];
-                console.log(lastVisible);
+                // console.log(nextReports);
             })
-
             // var lastReport = nextReports[nextReports.length -1];
-            // setData((data) => [...data, ...nextReports]);
-            // setLastReport(lastReport);
             // console.log(lastReport);
-        });
-        setName('');
-        setDescription('');
-        setIsUpdated(false);
-        setLoading(false);
+            // setData((data) => [...data, ...nextReports]);
+            setData(nextReports);
+            setLimit(c => c+2);
+            // setLastVisible(nextReports[nextReports.length -1]);
+        })
     }
-
-    // if(data.length === 0){
-    //     return (
-    //         <S.HeadWrapper>
-    //             <Link to="/" style={{ color:'white'}}>
-    //                     두루 캠퍼스 사역 보고 
-    //             </Link>
-    //                 <S.CampusName>관리자</S.CampusName>
-    //         </S.HeadWrapper>
-    //     )
-    // }
-  
     
     return (
         <>
@@ -204,7 +156,14 @@ const SouthAuth = () => {
                                             }}>수정완료</Button>
                                         </ModalFooter>
                                         </Modal>
-                                <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
+                                <Button color='danger' onClick={()=>{
+                                    if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                        removeReport(value.id);
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                    }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -213,9 +172,8 @@ const SouthAuth = () => {
                 ))}
             </tbody>
             </Table>
-            {loading && <h2 style={{ textAlign: "center" }}>Loading...</h2>}
 
-            {!loading && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
+            {data && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
                 <Button color="success" onClick={()=>loadMore()}>Load More</Button>
             </div>}
         </Form>
@@ -225,3 +183,19 @@ const SouthAuth = () => {
 };
 
 export default SouthAuth;
+
+
+    /* 요거는 useEffect 활용방법 예시 */
+
+    // useEffect(()=>{
+    //     if(!isCorrect){
+    //         var check = prompt('password', '');
+    //         console.log(check);
+    //         if(check==='1357'){
+    //             setIsCorrect(true);
+    //         }
+    //         else{
+    //             console.log('뒤로 가져야됨.');
+    //         }
+    //     } 
+    // },[])

@@ -10,6 +10,7 @@ const WestAuth = () => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
+    const [limit, setLimit] = useState(2);
     const [isUpdated,setIsUpdated] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [editOn, setEditOn] = useState(false);
@@ -42,7 +43,7 @@ const WestAuth = () => {
     useEffect(()=>{
         const getReport = () => {
         let reports = [];
-        ReportDataServiceWest.getAll().get().then(function(querySnapshot){
+        ReportDataServiceWest.getAll().limit(5).get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
         let temp = doc.data();
         let id  = doc.id;
@@ -66,6 +67,28 @@ const WestAuth = () => {
         getReport();
         setIsUpdated(false);
     },[isUpdated])
+
+    const loadMore = () => {
+        let nextReports = [];
+        ReportDataServiceWest.getAll().limit(limit+5).get().then((querySnapshot)=>{
+            querySnapshot.docs.forEach((doc)=>{
+                let temp = doc.data();
+                let id = doc.id;
+                let date = temp.date.toDate();
+
+                nextReports.push({
+                    name: temp.name,
+                    description: temp.description,
+                    year: date.getFullYear(),
+                    month: date.getMonth()+1,
+                    date: date.getDate(),
+                    id: id,
+                })
+            })
+            setData(nextReports);
+            setLimit(c => c+5);
+        })
+    }
 
     return (
         <>
@@ -127,7 +150,14 @@ const WestAuth = () => {
                                             }}>수정완료</Button>
                                         </ModalFooter>
                                         </Modal>
-                                <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
+                                        <Button color='danger' onClick={()=>{
+                                            if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                                removeReport(value.id);
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -136,6 +166,10 @@ const WestAuth = () => {
                 ))}
             </tbody>
             </Table>
+
+            {data && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
+                <Button color="success" onClick={()=>loadMore()}>Load More</Button>
+            </div>}
         </Form>
         </>
     );

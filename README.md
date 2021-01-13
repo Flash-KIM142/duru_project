@@ -8,6 +8,13 @@ git commit -m "message"
 git push -u origin master
 ```
 
+## 코드 변경 후 배포
+
+```
+yarn build
+firebase deploy
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -1,5 +1,6 @@
 import firebase from "../firebase";
 const db = firebase.collection("ReportsSouth");
+var first = db.orderBy("date","desc").limit(2);
 
 class ReportsDataService {
     getAll() {
@@ -18,25 +19,14 @@ class ReportsDataService {
       return db.doc(id).delete();
     }
 
-    fetchMore() {
-      let reports = [];
-      const reportRef = db.orderBy("date", "desc").get();
-      const lastReport = reportRef.docs[reportRef.docs.length-1];
-      db.orderBy("date", "desc").limit(2).startAfter(lastReport).get().then((documentSnapshot)=>{
-        documentSnapshot.forEach((doc)=>{
-          let temp = doc.data();
-          let id = doc.id;
-          let date = temp.date.toDate();
+    fetchMore(){
+      return first.get().then((documentSnapshots)=>{
+        // Get the last visible document
+        var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
 
-          reports.push({
-            name: temp.name,
-            description: temp.description,
-            year: date.getFullYear(),
-            month: date.getMonth()+1,
-            date: date.getDate(),
-            id: id,
-          })
-        })
+        // construct a new query starting at this document
+        // get the next 2 reports
+        var next = db.orderBy("date","desc").startAfter(lastVisible.date).limit(2);
       })
     }
   }

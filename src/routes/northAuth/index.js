@@ -10,13 +10,12 @@ const NorthAuth = () => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
-    // const [lastVisible, setLastVisible] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [editOn, setEditOn] = useState(false);
     const [currentReport,setCurrentReport] = useState(0);
-    const [isCorrect,setIsCorrect] = useState(false);
+    // const [isCorrect,setIsCorrect] = useState(false);
     const toggle = () => setEditOn(!editOn); 
 
     const removeReport = (id) => {
@@ -42,7 +41,7 @@ const NorthAuth = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('Reports').orderBy("date", "desc")
+        firebase.collection('Reports').orderBy("date", "desc").limit(5)
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();
@@ -64,8 +63,29 @@ const NorthAuth = () => {
         setName('');
         setDescription('');
         setIsUpdated(false);
-        setLoading(false);
     }, [isUpdated])
+
+    const loadMore = () => {
+        let nextReports = [];
+        firebase.collection('Reports').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
+            querySnapshot.docs.forEach((doc)=>{
+                let temp = doc.data();
+                let id = doc.id;
+                let date = temp.date.toDate();
+
+                nextReports.push({
+                    name: temp.name,
+                    description: temp.description,
+                    year: date.getFullYear(),
+                    month: date.getMonth()+1,
+                    date: date.getDate(),
+                    id: id,
+                })
+            })
+            setData(nextReports);
+            setLimit(c => c+2);
+        })
+    }
 
     return (
         <>
@@ -127,7 +147,14 @@ const NorthAuth = () => {
                                             }}>수정완료</Button>
                                         </ModalFooter>
                                         </Modal>
-                                <Button color='danger' onClick={()=>removeReport(value.id)}>삭제</Button>
+                                        <Button color='danger' onClick={()=>{
+                                            if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                                removeReport(value.id);
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -136,11 +163,10 @@ const NorthAuth = () => {
                 ))}
             </tbody>
             </Table>
-            {/* {loading && <h2 style={{ textAlign: "center" }}>Loading...</h2>} */}
 
-            {/* {!loading && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}> */}
-                {/* <Button color="success" onClick={()=>loadMore()}>Load More</Button> */}
-            {/* </div>} */}
+            {data && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
+                <Button color="success" onClick={()=>loadMore()}>Load More</Button>
+            </div>}
         </Form>
         </>
     );
