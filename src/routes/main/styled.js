@@ -5,6 +5,7 @@ export const HeadWrapper = styled.div`
     display: flex;
     margin: 0 auto;
     font-size: 30px;
+    font-weight: thin;
     text-align:center;
     align-items:center;
     justify-content: center;
@@ -28,7 +29,12 @@ export const HeadWrapper = styled.div`
 `;
 export const BodyWrapper = styled.div`
     width: 100%;
+    
 `;
+
+export const TailWrapper = styled.div` // 공지사항 및 내 정보 적어두기
+
+`
 
 export const CampusName = styled.div`
     display: flex;
@@ -63,6 +69,7 @@ export const StyledButton = styled.div`
     height: 150px;
     border-radius: 0.25rem;
     font-size: 1rem;
+    font-weight: bold;
     line-height: 1.5;
     /* border: 1px solid lightgray; */
     box-shadow:0 30px 60px 12px rgba(0,0,33,0.05), 0 4px 24px 0 rgba(0,0,33,0.05), 0 0 1px 0 rgba(0,0,33,0.09);

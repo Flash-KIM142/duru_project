@@ -52,7 +52,7 @@ textarea:-ms-input-placeholder {
 }
 
 .description {
-    width: 55%;
+    width: 55% - fixed;
 }
 
 .date {

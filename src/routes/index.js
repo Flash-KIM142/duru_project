@@ -8,6 +8,7 @@ import West from './west';
 import WestAuth from './westAuth';
 import South from './south';
 import SouthAuth from './southAuth';
+import Test from './test';
 
 export const EntryRoute = () => (
     <BrowserRouter>
@@ -19,6 +20,7 @@ export const EntryRoute = () => (
             <Route path="/westAuth" component={WestAuth} />
             <Route path="/south" component={South} />
             <Route path="/southAuth" component={SouthAuth} />
+            <Route path="/test" component ={Test} />
         </Switch>
     </BrowserRouter>
 );

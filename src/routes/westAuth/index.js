@@ -1,7 +1,7 @@
 // 서지부 화면에서 관리자 누르면 들어오게 되는 곳
 import React, { useEffect, useState } from 'react';
-import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { BrowserRouter, Route, Link, Switch, } from "react-router-dom"
+import { Collapse, Card, CardBody, Button, Input, Form, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Link, } from "react-router-dom"
 import * as S from '../main/styled';
 import ReportDataServiceWest from '../../services/reportServiceWest';
 import '../../index.css';
@@ -13,8 +13,10 @@ const WestAuth = () => {
     const [limit, setLimit] = useState(2);
     const [isUpdated,setIsUpdated] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [editOn, setEditOn] = useState(false);
     const [currentReport,setCurrentReport] = useState(0);
+    const [hideDate, setHideDate] = useState(false);
     const toggle = () => setEditOn(!editOn); 
 
     const removeReport = (id) => {
@@ -51,6 +53,7 @@ const WestAuth = () => {
         reports.push({
             name: temp.name,
             description: temp.description,
+            // isOpen: temp.isOpen,  //  table row 여러 개 펼치기 해결하려고 넣음
             year: date.getFullYear(),
             month: date.getMonth()+1,
             date: date.getDate(),
@@ -61,7 +64,7 @@ const WestAuth = () => {
         setData(reports);
         })
     }
-
+        setLoading(false);
         setName('');
         setDescription('');
         getReport();
@@ -79,6 +82,7 @@ const WestAuth = () => {
                 nextReports.push({
                     name: temp.name,
                     description: temp.description,
+                    // isOpen: temp.isOpen,
                     year: date.getFullYear(),
                     month: date.getMonth()+1,
                     date: date.getDate(),
@@ -99,13 +103,15 @@ const WestAuth = () => {
             <S.CampusName>서지부</S.CampusName>
         </S.HeadWrapper>
 
-        <Form style={{ marginTop:"10px"}}>
+        {loading && <div style={{ width: "95%", marginTop: "20px" ,marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
+
+        {!loading && <Form style={{ marginTop:"10px"}}>
             <Table style={{ marginTop: "30px" }}>
             <thead>
                 <tr>
                 <th class="name">이름</th>
                 <th class="description">내용</th>
-                <th class="date">날짜</th>
+                {!hideDate && <th class="date">날짜</th>}
                 </tr>
             </thead>
             <tbody>
@@ -114,13 +120,15 @@ const WestAuth = () => {
                 (
                     <tr key={key}>
                     <td class="name">{value.name}</td>
-                    <td >
+                    <td class="description">
                         <Button color="primary" onClick={() => {
+                            setHideDate(!hideDate);
                             setIsOpen(!isOpen);
+                            // setIsOpen(!value.isOpen);
                             setCurrentReport(key);
                             console.log(currentReport);
                             }}>펴기/접기</Button>
-                        <Collapse isOpen={isOpen&&(currentReport==key)}>
+                        <Collapse isOpen={isOpen&&(currentReport===key)}>
                             <Card>
                             <CardBody class="cardBody">
                                 <div class="cardBody">
@@ -133,7 +141,7 @@ const WestAuth = () => {
                                 setEditOn(!editOn);
                                 setCurrentReport(key);
                                 }}>수정</Button>
-                                    <Modal isOpen={editOn&&(currentReport==key)} toggle={toggle}>
+                                    <Modal isOpen={editOn&&(currentReport===key)} toggle={toggle}>
                                         <ModalHeader toggle={toggle}>수정하기</ModalHeader>
                                         <ModalBody>
                                             <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
@@ -161,7 +169,7 @@ const WestAuth = () => {
                             </div>
                         </Collapse>
                     </td>
-                    <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>
+                    {!hideDate && <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>}
                     </tr>
                 ))}
             </tbody>
@@ -170,7 +178,7 @@ const WestAuth = () => {
             {data && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
                 <Button color="success" onClick={()=>loadMore()}>Load More</Button>
             </div>}
-        </Form>
+        </Form>}
         </>
     );
 };

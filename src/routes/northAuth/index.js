@@ -12,8 +12,10 @@ const NorthAuth = () => {
     const [data,setData] = useState([]);
     const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const [editOn, setEditOn] = useState(false);
+    const [hideDate, setHideDate] = useState(false);
     const [currentReport,setCurrentReport] = useState(0);
     // const [isCorrect,setIsCorrect] = useState(false);
     const toggle = () => setEditOn(!editOn); 
@@ -59,7 +61,7 @@ const NorthAuth = () => {
             })
             setData(reports);
         });
-
+        setLoading(false);
         setName('');
         setDescription('');
         setIsUpdated(false);
@@ -83,7 +85,7 @@ const NorthAuth = () => {
                 })
             })
             setData(nextReports);
-            setLimit(c => c+2);
+            setLimit(c => c+5);
         })
     }
 
@@ -96,13 +98,15 @@ const NorthAuth = () => {
                     <S.CampusName>북지부</S.CampusName>
             </S.HeadWrapper>
 
-            <Form style={{ marginTop:"10px"}}>
+            {loading && <div style={{ width: "95%", marginTop: "20px", marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
+
+            {!loading && <Form style={{ marginTop:"10px"}}>
             <Table style={{ marginTop: "30px" }}>
             <thead>
                 <tr>
                 <th class="name">이름</th>
                 <th class="description">내용</th>
-                <th class="date">날짜</th>
+                {!hideDate && <th class="date">날짜</th>}
                 </tr>
             </thead>
             <tbody>
@@ -111,8 +115,9 @@ const NorthAuth = () => {
                 (
                     <tr key={key}>
                     <td class="name">{value.name}</td>
-                    <td >
+                    <td class="description">
                         <Button color="primary" onClick={() => {
+                            setHideDate(!hideDate);
                             setIsOpen(!isOpen);
                             setCurrentReport(key);
                             console.log(currentReport);
@@ -158,7 +163,7 @@ const NorthAuth = () => {
                             </div>
                         </Collapse>
                     </td>
-                    <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>
+                    {!hideDate && <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>}
                     </tr>
                 ))}
             </tbody>
@@ -167,7 +172,7 @@ const NorthAuth = () => {
             {data && <div style={{ width: "95%", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
                 <Button color="success" onClick={()=>loadMore()}>Load More</Button>
             </div>}
-        </Form>
+        </Form>}
         </>
     );
 };

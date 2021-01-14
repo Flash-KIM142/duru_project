@@ -19,6 +19,7 @@ const West = ({history}) => {
         name: name,
         description: description,
         date: date,
+        // isOpen: false,
         }).then(()=>{
         // console.log("Created new item successfully!");
         setIsUpdated(true);
@@ -50,15 +51,15 @@ const West = ({history}) => {
             <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
                 <Button color='success' onClick={()=>{
                         var check = prompt('password', '');
-                        if(check===process.env.REACT_APP_PASSWORD){
+                        if(check===process.env.REACT_APP_WESTPASSWORD){
                             history.push('/westAuth');
                         } 
                         else{
                             alert('wrong password');
                         }
-                    }}>Admin</Button>
+                    }}>관리자</Button>
                 <Button onClick={()=>{
-                    if(name.length<3 || description.length<3){
+                    if(name.length<2 || description.length<3){
                         alert('이름 또는 내용을 입력하지 않으셨습니다.');
                     }
                     else{

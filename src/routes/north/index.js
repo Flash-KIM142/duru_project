@@ -49,15 +49,15 @@ const North = ({history}) => {
             <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
                     <Button color='success' onClick={()=>{
                         var check = prompt('password', '');
-                        if(check===process.env.REACT_APP_PASSWORD){
+                        if(check===process.env.REACT_APP_NORTHPASSWORD){
                             history.push('/northAuth');
                         } 
                         else{
                             alert('wrong password');
                         }
-                    }}>Admin</Button>
+                    }}>관리자</Button>
                 <Button onClick={()=>{
-                    if(name.length<3 || description.length<3){
+                    if(name.length<2 || description.length<3){
                         alert('이름 또는 내용을 입력하지 않으셨습니다.');
                     }
                     else{

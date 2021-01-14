@@ -1,31 +1,41 @@
-// 남지부 화면에서 관리자 누르면 들어오게 되는 곳
-import React, { useEffect, useState } from 'react';
-import { Collapse, Card, CardBody, Button, Input, InputGroup, Form, FormGroup, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { BrowserRouter, Route, Link, Switch, } from "react-router-dom"
-import ReportDataServiceSouth from '../../services/reportServiceSouth';
+// 북지부 화면에서 관리자 누르면 들어오게 되는 곳
+import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom"
+import { Collapse, Card, CardBody, Button, Input, Form, FormGroup, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import ReportDataServiceTest from '../../services/reportServiceTest';
 import * as S from '../main/styled';
-import '../../index.css';
 import firebase from "../../firebase";
 
-const SouthAuth = () => {
+const Test = () => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
     const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    // const [isOpen, setIsOpen] = useState([false]);
-    const [editOn, setEditOn] = useState(false);
-    // const [currentReport,setCurrentReport] = useState(0);
-    const [currentReport,setCurrentReport] = useState(undefined);
-    const [isCorrect,setIsCorrect] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+    const [editOn, setEditOn] = useState(false);
     const [hideDate, setHideDate] = useState(false);
+    const [currentReport,setCurrentReport] = useState(0);
+    // const [isCorrect,setIsCorrect] = useState(false);
     const toggle = () => setEditOn(!editOn); 
 
+    const addReport = () => {
+        const date = new Date();
+        ReportDataServiceTest.create({
+            name: name,
+            description: description,
+            date: date,
+        }).then(()=>{
+        // console.log("Created new item successfully!");
+        setIsUpdated(true);
+        }).catch((err)=>{
+        console.log(err);
+        })
+    }
+
     const removeReport = (id) => {
-        ReportDataServiceSouth.delete(id).then(()=>{
-        // console.log("Document successfully deleted!");
+        ReportDataServiceTest.delete(id).then(()=>{
         setIsUpdated(true);
         }).catch((err)=>{
         console.log(err);
@@ -33,11 +43,10 @@ const SouthAuth = () => {
     }
 
     const editReport = (id) => {
-        ReportDataServiceSouth.update(id,{
+        ReportDataServiceTest.update(id,{
         name: name,
         description: description,
         }).then(()=>{
-        // console.log("Document successfully edited!");
         setName('');
         setDescription('');
         setIsUpdated(true);
@@ -48,7 +57,7 @@ const SouthAuth = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('ReportsSouth').orderBy("date", "desc").limit(5)
+        firebase.collection('Test').orderBy("date", "desc").limit(5)
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();
@@ -66,16 +75,15 @@ const SouthAuth = () => {
             })
             setData(reports);
         });
+        setLoading(false);
         setName('');
         setDescription('');
         setIsUpdated(false);
-        setLoading(false);
     }, [isUpdated])
 
     const loadMore = () => {
         let nextReports = [];
-
-        firebase.collection('ReportsSouth').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
+        firebase.collection('Test').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
             querySnapshot.docs.forEach((doc)=>{
                 let temp = doc.data();
                 let id = doc.id;
@@ -89,27 +97,39 @@ const SouthAuth = () => {
                     date: date.getDate(),
                     id: id,
                 })
-                // console.log(nextReports);
             })
-            // var lastReport = nextReports[nextReports.length -1];
-            // console.log(lastReport);
-            // setData((data) => [...data, ...nextReports]);
             setData(nextReports);
             setLimit(c => c+5);
-            // setLastVisible(nextReports[nextReports.length -1]);
         })
     }
-    
+
     return (
         <>
             <S.HeadWrapper>
                 <Link to="/" style={{ color:'white'}}>
                         두루 캠퍼스 사역 보고 
                 </Link>
-                    <S.CampusName>남지부</S.CampusName>
+                    <S.CampusName>Test</S.CampusName>
             </S.HeadWrapper>
 
-            {data && loading && <div style={{ width: "95%", marginTop: "20px", marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
+            <Form style={{ marginTop:"10px"}}>
+                <FormGroup>
+                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} value = {name} placeholder="이름" onChange = {e=>setName(e.target.value)}/>
+                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
+                </FormGroup>
+                <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
+                    <Button onClick={()=>{
+                        if(name.length<2 || description.length<3){
+                            alert('이름 또는 내용을 입력하지 않으셨습니다.');
+                        }
+                        else{
+                            alert('성공적으로 제출됐습니다!'); addReport();
+                        }
+                        }}>제출</Button>
+                </div>
+            </Form>
+
+            {loading && <div style={{ width: "95%", marginTop: "20px", marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
 
             {!loading && <Form style={{ marginTop:"10px"}}>
             <Table style={{ marginTop: "30px" }}>
@@ -129,9 +149,6 @@ const SouthAuth = () => {
                     <td class="description">
                         <Button color="primary" onClick={() => {
                             setHideDate(!hideDate);
-                            // let newIsOpen = [...isOpen];      //copy array
-                            // newIsOpen[key] = !newIsOpen[key]; //toggle flag
-                            // setIsOpen(newIsOpen);             //set new state
                             setIsOpen(!isOpen);
                             setCurrentReport(key);
                             console.log(currentReport);
@@ -165,15 +182,15 @@ const SouthAuth = () => {
                                             setEditOn(!editOn);
                                             }}>수정완료</Button>
                                         </ModalFooter>
-                                    </Modal>
-                                <Button color='danger' onClick={()=>{
-                                    if(window.confirm('정말 삭제하시겠습니까?')===true){
-                                        removeReport(value.id);
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                    }}>삭제</Button>
+                                        </Modal>
+                                        <Button color='danger' onClick={()=>{
+                                            if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                                removeReport(value.id);
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -189,23 +206,6 @@ const SouthAuth = () => {
         </Form>}
         </>
     );
-                                   
 };
 
-export default SouthAuth;
-
-
-    /* 요거는 useEffect 활용방법 예시 */
-
-    // useEffect(()=>{
-    //     if(!isCorrect){
-    //         var check = prompt('password', '');
-    //         console.log(check);
-    //         if(check==='1357'){
-    //             setIsCorrect(true);
-    //         }
-    //         else{
-    //             console.log('뒤로 가져야됨.');
-    //         }
-    //     } 
-    // },[])
+export default Test;
