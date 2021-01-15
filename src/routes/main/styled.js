@@ -29,12 +29,24 @@ export const HeadWrapper = styled.div`
 `;
 export const BodyWrapper = styled.div`
     width: 100%;
-    
 `;
 
-export const TailWrapper = styled.div` // 공지사항 및 내 정보 적어두기
-
+export const TailWrapper = styled.div` // 하단부 공지사항 및 내 정보 적어두기
+    margin: 0 auto;
+    margin-top: 15px;
+    border-top: 1px thin lightgray;
+    border-color: black;
+    width: 100%;
+    background-color: #fafaff;
 `
+
+// export const TailBody = styled.div`
+//     margin: 0 auto;
+//     width: 100%;
+//     margin-top: 30px;
+//     height: 100px;
+//     background-color: white;
+// `
 
 export const CampusName = styled.div`
     display: flex;

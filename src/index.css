@@ -3,6 +3,13 @@
     margin: 0;
 }
 
+@font-face {
+    font-family: 'Dohyeon-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Dohyeon-Regular'), url('../src/fonts/DoHyeon-Regular.ttf'), format('ttf'),
+}
+
 body,
 html {
     height: 100%;
@@ -72,4 +79,32 @@ textarea:-ms-input-placeholder {
     margin-left: 0.5px;
     margin-top: 0.5px;
     margin-bottom: 0.5px;
+}
+
+.contactWrapper {
+    padding-top: 45px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.contact {
+    color: #424242;
+    font-size: 15px;
+    letter-spacing: 0em;
+    line-height: 1.6;
+    font-family: 'DoHyeon-Regular';
+}
+
+.img {
+    height: 32px;
+    width: 32px;
+}
+
+.copyright {
+    margin-top: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0em;
+    color: #424242;
 }

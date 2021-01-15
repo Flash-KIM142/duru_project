@@ -5,6 +5,8 @@ import { Collapse, Card, CardBody, Button, Input, Form, FormGroup, Table, Modal,
 import ReportDataServiceTest from '../../services/reportServiceTest';
 import * as S from '../main/styled';
 import firebase from "../../firebase";
+import '../../index.css';
+import logo from "../flash.png";
 
 const Test = () => {
     const [name,setName] = useState('');
@@ -107,7 +109,7 @@ const Test = () => {
         <>
             <S.HeadWrapper>
                 <Link to="/" style={{ color:'white'}}>
-                        두루 캠퍼스 사역 보고 
+                    두루 캠퍼스 사역 보고 
                 </Link>
                     <S.CampusName>Test</S.CampusName>
             </S.HeadWrapper>
@@ -204,6 +206,20 @@ const Test = () => {
                 <Button color="success" onClick={()=>loadMore()}>Load More</Button>
             </div>}
         </Form>}
+
+        <S.TailWrapper>
+            <div class="contactWrapper">
+                <p class="contact">
+                    이용에 불편한 점이나 질문사항이 있으실 경우에는 다음 메일로 연락 주시면 빠른 시간 내에 해결해드리도록 노력하겠습니다.
+                </p>
+                <p style={{ fontSize: "18px", }}>topqr123q@gmail.com</p>
+                <hr style={{ marginTop: "20px", marginBottom: "20px", border: 0, borderTop: "1px solid #eee" }}></hr>
+                <div style={{ textAlign: "center", }}>
+                    <img src={logo} style={{ height: "40px", width: "40px", }} />
+                </div>
+                <p class="copyright">Copyright © 2021 by Flash, All rights reserved</p>
+            </div>
+        </S.TailWrapper>
         </>
     );
 };
