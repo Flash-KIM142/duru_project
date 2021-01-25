@@ -59,7 +59,7 @@ const West = ({history}) => {
                             alert('wrong password');
                         }
                     }}>관리자</Button>
-                <Button onClick={()=>{
+                <Button color='primary' onClick={()=>{
                     if(name.length<2 || description.length<3){
                         alert('이름 또는 내용을 입력하지 않으셨습니다.');
                     }
@@ -73,14 +73,18 @@ const West = ({history}) => {
         <S.TailWrapper>
             <div class="contactWrapper">
                 <p class="contact">
-                    이용에 불편한 점이나 질문사항이 있으실 경우에는 다음 메일로 연락 주시면 빠른 시간 내에 해결해드리도록 노력하겠습니다.
+                이용에 불편한 점이나 질문사항이 있으실 경우에는 다음 메일로 연락 주시면 빠르게 해결하도록 하겠습니다.
                 </p>
                 <p style={{ fontSize: "18px", }}>topqr123q@gmail.com</p>
                 <hr style={{ marginTop: "20px", marginBottom: "20px", border: 0, borderTop: "1px solid #eee" }}></hr>
                 <div style={{ textAlign: "center", }}>
                     <img src={logo} style={{ height: "40px", width: "40px", }} />
                 </div>
-                <p class="copyright">Copyright © 2021 by Flash, All rights reserved</p>
+                <div class="copyrightWrapper">
+                    Copyright © 2021 by &nbsp;
+                    <h3 class="copyrightFlash" >Flash</h3>
+                    , All rights reserved
+                </div>
             </div>
         </S.TailWrapper>
         </>

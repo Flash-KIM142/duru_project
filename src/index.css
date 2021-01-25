@@ -10,6 +10,13 @@
     src: local('Dohyeon-Regular'), url('../src/fonts/DoHyeon-Regular.ttf'), format('ttf'),
 }
 
+@font-face {
+    font-family: 'BMHANNAAir_otf';
+    font-style: normal;
+    font-weight: normal;
+    src: local('BMHANNAAir_otf'), url('../src/fonts/BMHANNAAir_otf.otf'), format('otf'),
+}
+
 body,
 html {
     height: 100%;
@@ -92,7 +99,7 @@ textarea:-ms-input-placeholder {
     font-size: 15px;
     letter-spacing: 0em;
     line-height: 1.6;
-    font-family: 'DoHyeon-Regular';
+    font-family: 'Dohyeon-Regular';
 }
 
 .img {
@@ -107,4 +114,99 @@ textarea:-ms-input-placeholder {
     font-size: 12px;
     letter-spacing: 0em;
     color: #424242;
+    display: inline-block;
 }
+
+.copyrightFlash {
+    margin-top: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0em;
+    color: black;
+    font-weight: bolder;
+    display: inline-block;
+}
+
+.copyrightWrapper {
+    text-align: center;
+    color: #424242;
+    font-size: 12px;
+}
+
+.buttonWrapper {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    /* width: */
+}
+
+.dateFrom {
+    /* display: inline-block; */
+}
+
+.dateTo {
+
+}
+
+.dateCollectionDescription {
+    border-top-left-radius: 15px; /* 좌상단 */
+    border-top-right-radius: 15px; /* 우상단 */
+    border-bottom-right-radius: 15px;/* 우하단 */
+    border-bottom-left-radius: 15px; /* 좌하단 */
+    background-color: #fafafa;
+    padding: 15px;
+    box-shadow: rgba(0,0,0,0.09) 2px 4px;
+    margin-top: 10px;
+}
+
+select {
+    /* font-family: "Noto Sansf KR", sans-serif; */
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    width: 80%;
+  
+    color: #444;
+    background-color: #fff;
+  
+    padding: 0.4em 0.5em;
+  
+    border: 1px solid #aaa;
+    border-radius: 0.5em;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  }
+  select:hover {
+    border-color: red;
+  }
+  select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+  }
+
+  .dateCollection_selectDate_wrap {
+    display: block;
+    text-align: center;
+  }
+
+  .dateSelect_body {
+      display: block;
+      padding: 15px;
+
+      background-color: #ffffff;
+  }
+
+  .dateSelect_label {
+    text-align: right;
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #636e72;
+
+    margin-top: 15px;
+
+    padding-right: 15%;
+    padding-left: 15%;
+  }
