@@ -8,18 +8,10 @@ const DateTable = ({ fromYear, fromMonth, fromDate, toYear, toMonth, toDate }) =
 
     useEffect(() => {
         let reports = [];
-        let newToDate = Number(toDate) + Number(1);
-        let start = new Date(fromYear+'-'+fromMonth+'-'+fromDate);
-        let end = new Date(toYear + '-' + toMonth + '-' + newToDate);
+        let start = new Date(fromYear + '-' + fromMonth + '-' +  fromDate + 'T00:00:00'.replace(/-/g, "/"));
+        let end = new Date(toYear + '-' + toMonth + '-' + toDate + 'T23:59:59'.replace(/-/g, "/"));
         console.log(start);
-        console.log(newToDate);
-        if(newToDate>31){
-            toMonth = Number(toMonth) + Number(1);
-            newToDate = Number(1);
-            end = new Date(toYear + '-' + toMonth + '-' + newToDate);
-        }
-        console.log(newToDate);
-        console.log(toMonth);
+        console.log(end);
 
         ReportDataServiceSouth.getAll().where('date', '>=', start).where('date', '<=', end).get().then((documentSnapshots)=>{
             documentSnapshots.forEach((doc)=>{
