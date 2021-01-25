@@ -40,14 +40,6 @@ export const TailWrapper = styled.div` // 하단부 공지사항 및 내 정보 
     background-color: #fafaff;
 `
 
-// export const TailBody = styled.div`
-//     margin: 0 auto;
-//     width: 100%;
-//     margin-top: 30px;
-//     height: 100px;
-//     background-color: white;
-// `
-
 export const CampusName = styled.div`
     display: flex;
     font-size: 15px;
@@ -79,20 +71,21 @@ export const StyledButton = styled.div`
     display: flex;
     width: 300px;
     height: 150px;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    font-weight: bold;
+    border-top-left-radius: 15px; /* 좌상단 */
+    border-top-right-radius: 15px; /* 우상단 */
+    border-bottom-right-radius: 15px;/* 우하단 */
+    border-bottom-left-radius: 15px; /* 좌하단 */
+    font-family: Nanum Gothic Coding;
+    font-size: 1.75rem;
+    font-weight: bolder;
     line-height: 1.5;
-    /* border: 1px solid lightgray; */
     box-shadow:0 30px 60px 12px rgba(0,0,33,0.05), 0 4px 24px 0 rgba(0,0,33,0.05), 0 0 1px 0 rgba(0,0,33,0.09);
-    color: gray;
+    color: #848484;
     background-color: white;
-    font-weight:lighter;
-    margin: 1rem;
+    /* margin: 1rem; */
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 30px;
-    font-size: 25px;
     text-align:center;
     align-items:center;
     justify-content: center;
