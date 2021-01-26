@@ -1,32 +1,40 @@
 // 홈화면에 사용하는 style
 import styled from 'styled-components';
+// import headImage from '../duruproject_headImgae.png';
 
 export const HeadWrapper = styled.div`
     display: flex;
     margin: 0 auto;
     font-size: 30px;
-    font-weight: thin;
-    text-align:center;
-    align-items:center;
-    justify-content: center;
+    font-weight: bold;
+    text-align:left;
+    align-items:left;
+    justify-content: left;
+
+    padding: 11%;
     width:100%;
-    height: 150px;
-    background-color:black;
-    color: white;
+    height: 20%;
+
+    background-color: #EBF3FF;
+    background-image: src="../duruproject_headImage.png";
+    /* background-image: headImage; */
+
+    color: gray
+    ;
     &:hover{
         color:white;
     }
     &:active{
         color:white;
     }
-    &:visited{
+    /* &:visited{
         color:white;
-    }
+    } */
     &:link{
         color:white;
-    }
-    
+    } 
 `;
+
 export const BodyWrapper = styled.div`
     width: 100%;
 `;
@@ -70,17 +78,17 @@ export const MainInput = styled.input`
 export const StyledButton = styled.div`
     display: flex;
     width: 300px;
-    height: 150px;
+    height: 130px;
     border-top-left-radius: 15px; /* 좌상단 */
     border-top-right-radius: 15px; /* 우상단 */
     border-bottom-right-radius: 15px;/* 우하단 */
     border-bottom-left-radius: 15px; /* 좌하단 */
-    font-family: Nanum Gothic Coding;
+    /* font-family: Nanum Gothic Coding; */
     font-size: 1.75rem;
-    font-weight: bolder;
+    font-weight: 350;
     line-height: 1.5;
     box-shadow:0 30px 60px 12px rgba(0,0,33,0.05), 0 4px 24px 0 rgba(0,0,33,0.05), 0 0 1px 0 rgba(0,0,33,0.09);
-    color: #848484;
+    color: #2e2e2e;
     background-color: white;
     /* margin: 1rem; */
     margin: 0 auto;

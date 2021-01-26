@@ -37,36 +37,45 @@ const West = ({history}) => {
 
     return (
         <>
-        <S.HeadWrapper>
-            <Link to="/" style={{ color:'white'}}>
-                    두루 캠퍼스 사역 보고
-            </Link>
-            <S.CampusName>서지부</S.CampusName>
-        </S.HeadWrapper>
+            <div class="headWrapper" >
+                    <Link to="/" style={{ color: "black", }}>
+                        두루 캠퍼스<br/>사역 보고
+                    </Link>
+            </div>
 
         <Form style={{ marginTop:"10px"}}>
             <FormGroup>
-            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} value = {name} placeholder="이름" onChange = {e=>setName(e.target.value)}/>
-            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
+            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto", marginBottom: "5px", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        value = {name} placeholder="이름" onChange = {e=>setName(e.target.value)}/>
+                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
             </FormGroup>
-            <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
-                <Button color='success' onClick={()=>{
-                        var check = prompt('password', '');
-                        if(check===process.env.REACT_APP_WESTPASSWORD){
-                            history.push('/westAuth');
-                        } 
-                        else{
-                            alert('wrong password');
-                        }
-                    }}>관리자</Button>
-                <Button color='primary' onClick={()=>{
-                    if(name.length<2 || description.length<3){
-                        alert('이름 또는 내용을 입력하지 않으셨습니다.');
-                    }
-                    else{
-                        alert('성공적으로 제출됐습니다!'); addReport();
-                    }
-                    }}>제출</Button>
+            <div style={{width:"95%",margin:'0 auto', height: "38px", }}>
+                <div style={{ float: "left", }}>
+                    <Button color='info' 
+                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        onClick={()=>{
+                                    var check = prompt('password', '');
+                                    if(check===process.env.REACT_APP_WESTPASSWORD){
+                                        history.push('/westAuth');
+                                    } 
+                                    else{
+                                        alert('wrong password');
+                                    }
+                            }}>관리자</Button>
+                </div>
+                <div style={{ float: "right", display: "inline-block", }}>
+                    <Button color='primary' 
+                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        onClick={()=>{
+                            if(name.length<2 || description.length<3){
+                                alert('이름 또는 내용을 입력하지 않으셨습니다.');
+                            }
+                            else{
+                                alert('성공적으로 제출됐습니다!'); addReport();
+                            }
+                            }}>제출</Button>
+                </div>
             </div>
         </Form>
 

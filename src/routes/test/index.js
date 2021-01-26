@@ -123,27 +123,30 @@ const Test = () => {
 
     return (
         <>
-            <S.HeadWrapper>
-                <Link to="/" style={{ color:'white'}}>
-                    두루 캠퍼스 사역 보고 
+            <div class="headWrapper" >
+                <Link to="/" style={{ color: "black", }}>
+                    두루 캠퍼스<br/>사역 보고
                 </Link>
-                    <S.CampusName>Test</S.CampusName>
-            </S.HeadWrapper>
+            </div>
 
             <Form style={{ marginTop:"10px"}}>
                 <FormGroup>
-                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} value = {name} placeholder="이름" onChange = {e=>setName(e.target.value)}/>
-                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
+                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto", marginBottom: "5px", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        value = {name} placeholder="이름" onChange = {e=>setName(e.target.value)}/>
+                <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        type="textarea" rows="6" value = {description} placeholder="내용을 입력해주세요." onChange = {e=>setDescription(e.target.value)}/>
                 </FormGroup>
                 <div style={{width:"95%",margin:'0 auto',textAlign:'right'}}>
-                    <Button onClick={()=>{
-                        if(name.length<2 || description.length<3){
-                            alert('이름 또는 내용을 입력하지 않으셨습니다.');
-                        }
-                        else{
-                            alert('성공적으로 제출됐습니다!'); addReport();
-                        }
-                        }}>제출</Button>
+                    <Button 
+                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }}     
+                        onClick={()=>{
+                            if(name.length<2 || description.length<3){
+                                alert('이름 또는 내용을 입력하지 않으셨습니다.');
+                            }
+                            else{
+                                alert('성공적으로 제출됐습니다!'); addReport();
+                            }
+                            }}>제출</Button>
                 </div>
             </Form>
 
@@ -165,25 +168,25 @@ const Test = () => {
                     <tr key={key}>
                     <td class="name">{value.name}</td>
                     <td class="description">
-                        <Button color="primary" onClick={() => {
-                            setHideDate(!hideDate);
-                            setIsOpen(!isOpen);
-                            setCurrentReport(key);
-                            console.log(currentReport);
-                            }}>펴기/접기</Button>
+                        <Button color="primary" 
+                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                            onClick={() => {
+                                setHideDate(!hideDate);
+                                setIsOpen(!isOpen);
+                                setCurrentReport(key);
+                                console.log(currentReport);
+                                }}>펴기/접기</Button>
                         <Collapse isOpen={isOpen&&(currentReport===key)}>
-                            <Card>
-                            <CardBody class="cardBody">
                                 <div class="cardBody">
                                     {value.description}
                                 </div>
-                            </CardBody>
-                            </Card>
                             <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                            <Button color='info' onClick={()=>{
-                                setEditOn(!editOn);
-                                setCurrentReport(key);
-                                }}>수정</Button>
+                            <Button color='info' 
+                                style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                                onClick={()=>{
+                                    setEditOn(!editOn);
+                                    setCurrentReport(key);
+                                    }}>수정</Button>
                                     <Modal isOpen={editOn&&(currentReport===key)} toggle={toggle}>
                                         <ModalHeader toggle={toggle}>수정하기</ModalHeader>
                                         <ModalBody>
@@ -201,14 +204,16 @@ const Test = () => {
                                             }}>수정완료</Button>
                                         </ModalFooter>
                                         </Modal>
-                                        <Button color='danger' onClick={()=>{
-                                            if(window.confirm('정말 삭제하시겠습니까?')===true){
-                                                removeReport(value.id);
-                                            }
-                                            else{
-                                                return false;
-                                            }
-                                        }}>삭제</Button>
+                                        <Button color='danger' 
+                                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                                            onClick={()=>{
+                                                if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                                    removeReport(value.id);
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -220,7 +225,7 @@ const Test = () => {
 
             <div class="buttonWrapper">
                 <div style={{ margin: "4px" }}>
-                    <Button style={{ backgroundColor:"#a29bfe", border: "none", }}
+                    <Button style={{ backgroundColor: "#a29bfe", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                         onClick={()=>setIsModalOn(!isModalOn)}>모아보기</Button>
                 </div>
                 <Modal isOpen={isModalOn} toggle={toggleModal}>
@@ -340,7 +345,9 @@ const Test = () => {
                     </Modal>
 
                 {data && <div style={{ margin: "4px"}}>
-                    <Button style={{ border: "none", height: "36px", }} color="success" onClick={()=>loadMore()}>Load More</Button>
+                    <Button color="success" 
+                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        onClick={()=>loadMore()}>Load More</Button>
                 </div>}
             </div>
         </Form>}

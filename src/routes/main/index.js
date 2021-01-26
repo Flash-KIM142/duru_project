@@ -8,11 +8,11 @@ import logo from "../flash.png";
 const Main = () => {
     return (
         <>
-            <S.HeadWrapper>
-                <Link to="/" style={{ color:'white'}}>
-                    두루 캠퍼스 사역 보고
+            <div class="headWrapper" >
+                <Link to="/" style={{ color: "black", }}>
+                    두루 캠퍼스<br/>사역 보고
                 </Link>
-            </S.HeadWrapper>
+            </div>
             
             <S.BodyWrapper>
                 <Link to="/north" style={{ color:'white'}}>
@@ -34,7 +34,7 @@ const Main = () => {
                     <p style={{ fontSize: "18px", }}>topqr123q@gmail.com</p>
                     <hr style={{ marginTop: "20px", marginBottom: "20px", border: 0, borderTop: "1px solid #eee" }}></hr>
                     <div style={{ textAlign: "center", }}>
-                        <img src={logo} style={{ height: "40px", width: "40px", }} />
+                        <img alt="flashLogo" src={logo} style={{ height: "40px", width: "40px", }} />
                     </div>
                     <div class="copyrightWrapper">
                         Copyright © 2021 by &nbsp;

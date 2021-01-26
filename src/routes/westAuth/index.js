@@ -115,12 +115,11 @@ const WestAuth = () => {
 
     return (
         <>
-        <S.HeadWrapper>
-            <Link to="/" style={{ color:'white'}}>
-                    두루 캠퍼스 사역 보고
-            </Link>
-            <S.CampusName>서지부</S.CampusName>
-        </S.HeadWrapper>
+            <div class="headWrapper" >
+                    <Link to="/" style={{ color: "black", }}>
+                        두루 캠퍼스<br/>사역 보고
+                    </Link>
+            </div>
 
         {loading && <div style={{ width: "95%", marginTop: "20px" ,marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
 
@@ -140,26 +139,26 @@ const WestAuth = () => {
                     <tr key={key}>
                     <td class="name">{value.name}</td>
                     <td class="description">
-                        <Button color="primary" onClick={() => {
-                            setHideDate(!hideDate);
-                            setIsOpen(!isOpen);
-                            // setIsOpen(!value.isOpen);
-                            setCurrentReport(key);
-                            console.log(currentReport);
-                            }}>펴기/접기</Button>
+                        <Button color="primary" 
+                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                            onClick={() => {
+                                setHideDate(!hideDate);
+                                setIsOpen(!isOpen);
+                                // setIsOpen(!value.isOpen);
+                                setCurrentReport(key);
+                                console.log(currentReport);
+                                }}>펴기/접기</Button>
                         <Collapse isOpen={isOpen&&(currentReport===key)}>
-                            <Card>
-                            <CardBody class="cardBody">
                                 <div class="cardBody">
                                     {value.description}
                                 </div>
-                            </CardBody>
-                            </Card>
                             <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                            <Button color='info' onClick={()=>{
-                                setEditOn(!editOn);
-                                setCurrentReport(key);
-                                }}>수정</Button>
+                            <Button color='info' 
+                                style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                                onClick={()=>{
+                                    setEditOn(!editOn);
+                                    setCurrentReport(key);
+                                    }}>수정</Button>
                                     <Modal isOpen={editOn&&(currentReport===key)} toggle={toggle}>
                                         <ModalHeader toggle={toggle}>수정하기</ModalHeader>
                                         <ModalBody>
@@ -177,14 +176,16 @@ const WestAuth = () => {
                                             }}>수정완료</Button>
                                         </ModalFooter>
                                         </Modal>
-                                        <Button color='danger' onClick={()=>{
-                                            if(window.confirm('정말 삭제하시겠습니까?')===true){
-                                                removeReport(value.id);
-                                            }
-                                            else{
-                                                return false;
-                                            }
-                                        }}>삭제</Button>
+                                        <Button color='danger' 
+                                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                                            onClick={()=>{
+                                                if(window.confirm('정말 삭제하시겠습니까?')===true){
+                                                    removeReport(value.id);
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            }}>삭제</Button>
                             </div>
                         </Collapse>
                     </td>
@@ -196,7 +197,7 @@ const WestAuth = () => {
 
             <div class="buttonWrapper">
                 <div style={{ margin: "4px" }}>
-                    <Button style={{ backgroundColor:"#a29bfe", border: "none", }}
+                    <Button style={{ backgroundColor: "#a29bfe",borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                         onClick={()=>setIsModalOn(!isModalOn)}>모아보기</Button>
                 </div>
                 <Modal isOpen={isModalOn} toggle={toggleModal}>
@@ -295,7 +296,7 @@ const WestAuth = () => {
 
                     <ModalFooter>
                         <Button 
-                            style={{ backgroundColor: "#6c5ce7", border: "none", }}
+                            style={{ backgroundColor: "#6c5ce7", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                             onClick={()=>{
                             setIsModalOn(!isModalOn);
                             setIsCollectionOn(!isCollectionOn);
@@ -316,7 +317,9 @@ const WestAuth = () => {
                     </Modal>
 
                 {data && <div style={{ margin: "4px"}}>
-                    <Button style={{ border: "none", height: "36px", }} color="success" onClick={()=>loadMore()}>Load More</Button>
+                    <Button color="success" 
+                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                        onClick={()=>loadMore()}>Load More</Button>
                 </div>}
             </div>
         </Form>}
