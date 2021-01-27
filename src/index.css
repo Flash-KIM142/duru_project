@@ -172,14 +172,6 @@ textarea:-ms-input-placeholder {
     /* width: */
 }
 
-.dateFrom {
-    /* display: inline-block; */
-}
-
-.dateTo {
-
-}
-
 .dateCollectionDescription {
     border-top-left-radius: 8px; /* 좌상단 */
     border-top-right-radius: 8px; /* 우상단 */
@@ -218,16 +210,31 @@ select {
     outline: none;
   }
 
+  .dateFromTo{
+      text-align: center;
+      margin-top: 15px;
+  }
+
+
   .dateCollection_selectDate_wrap {
     display: block;
     text-align: center;
+
+    /* border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 0.5px solid #D8D8D8; */
   }
 
   .dateSelect_body {
       display: block;
-      padding: 15px;
 
       background-color: #ffffff;
+
+      text-align: center;
+
+      padding: 15px;
   }
 
   .dateSelect_label {

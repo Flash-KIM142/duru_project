@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import ReportDataServiceNorth from '../../../services/reportService';
 import '../../../index.css';
 
-const DateTable = ({ fromYear, fromMonth, fromDate, toYear, toMonth, toDate }) => {
+const DateTable = ({ dateFrom, dateTo }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         let reports = [];
-        let start = new Date(fromYear + '-' + fromMonth + '-' +  fromDate + 'T00:00:00'.replace(/-/g, "/"));
-        let end = new Date(toYear + '-' + toMonth + '-' + toDate + 'T23:59:59'.replace(/-/g, "/"));
+        let start = new Date(dateFrom + 'T00:00:00'.replace(/-/g, "/"));
+        let end = new Date(dateTo + 'T23:59:59'.replace(/-/g, "/"));
         console.log(start);
         console.log(end);
 
