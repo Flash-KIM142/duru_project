@@ -257,14 +257,11 @@ select {
     height: 20%;
 
     background-color: #EBF3FF;
-    background-image: url('routes/duruproject_headImage.png');
-    /* background-image: headImage; */
-    
+    background-image: url('routes/duruproject_headImage.png');    
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain; 
 
-    ;
   }
   .headWrapper:hover{
       color:white;
