@@ -1,13 +1,14 @@
 // 북지부 화면에서 관리자 누르면 들어오게 되는 곳
 import React, { useState, useEffect } from 'react';
 import { Link, } from "react-router-dom"
-import { Collapse, Card, CardBody, Button, Input, Form, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Input,  Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import ReportDataService from '../../services/reportService';
 import * as S from '../main/styled';
 import firebase from "../../firebase";
 import '../../index.css';
 import logo from '../flash.png';
 import DateTable from '../../components/dateCollection/north';
+import Reports from '../../components/report'
 
 const NorthAuth = () => {
     const [name,setName] = useState('');
@@ -16,10 +17,7 @@ const NorthAuth = () => {
     const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
     const [editOn, setEditOn] = useState(false);
-    const [hideDate, setHideDate] = useState(false);
-    const [currentReport,setCurrentReport] = useState(0);
     const toggle = () => setEditOn(!editOn); 
     const [isModalOn, setIsModalOn] = useState(false);
     const toggleModal = () => setIsModalOn(!isModalOn);
@@ -108,76 +106,8 @@ const NorthAuth = () => {
 
             {loading && <div style={{ width: "95%", marginTop: "20px", marginLeft: "auto", marginRight: "auto",  textAlign: "center", fontWeight: "bold"}}>Loading...</div>}
 
-            {!loading && <Form style={{ marginTop:"10px"}}>
-            <Table style={{ marginTop: "30px" }}>
-            <thead>
-                <tr>
-                    <th class="name">이름</th>
-                    <th class="description">내용</th>
-                    {!hideDate && <th class="date">날짜</th>}
-                </tr>
-            </thead>
-            <tbody>
-                {data&&
-                data.map((value,key)=>
-                (
-                    <tr key={key}>
-                    <td class="name">{value.name}</td>
-                    <td class="description">
-                        <Button color="primary" 
-                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                            onClick={() => {
-                                setHideDate(!hideDate);
-                                setIsOpen(!isOpen);
-                                setCurrentReport(key);
-                                console.log(currentReport);
-                                }}>펴기/접기</Button>
-                        <Collapse isOpen={isOpen&&(currentReport===key)}>
-                                <div class="cardBody">
-                                    {value.description}
-                                </div>
-                            <div style={{marginTop:'5px', marginLeft:'2px', textAlign:'right'}}>
-                            <Button color='info' 
-                                style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                                onClick={()=>{
-                                    setEditOn(!editOn);
-                                    setCurrentReport(key);
-                                }}>수정</Button>
-                                    <Modal isOpen={editOn&&(currentReport===key)} toggle={toggle}>
-                                        <ModalHeader toggle={toggle}>수정하기</ModalHeader>
-                                        <ModalBody>
-                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
-                                                    value = {name} placeholder={value.name}
-                                                    onChange = {e=>setName(e.target.value)}></Input>
-                                            <Input style={{ width: "95%", marginLeft: "auto", marginRight: "auto" }} 
-                                                    type="textarea" rows="6" value = {description} placeholder={value.description}
-                                                    onChange = {e=>setDescription(e.target.value)}></Input>
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <Button color= 'primary' onClick={()=>{
-                                            editReport(value.id);
-                                            setEditOn(!editOn);
-                                            }}>수정완료</Button>
-                                        </ModalFooter>
-                                        </Modal>
-                                        <Button color='danger' 
-                                            style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                                            onClick={()=>{
-                                                if(window.confirm('정말 삭제하시겠습니까?')===true){
-                                                    removeReport(value.id);
-                                                }
-                                                else{
-                                                    return false;
-                                                }
-                                            }}>삭제</Button>
-                            </div>
-                        </Collapse>
-                    </td>
-                    {!hideDate && <td class="date" style={{ fontSize:'smaller' }}>{value.year}년 <br/>{value.month}월 {value.date}일</td>}
-                    </tr>
-                ))}
-            </tbody>
-            </Table>
+            {/* 사역보고 리스트*/}
+            <Reports data={data} />
 
             <div class="buttonWrapper">
                 <div style={{ margin: "4px" }}>
@@ -194,7 +124,7 @@ const NorthAuth = () => {
                             <p style={{ width: "95%", fontSize: "20px", fontWeight: "bold", }}>From</p>
                             <div class="dateCollection_selectDate_wrap">
                                 <Input style={{ textAlign: "center", width: "50%", marginLeft: "auto", marginRight: "auto", marginBottom: "5px", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                                                value = {dateFrom} placeholder="2021-01-01" onChange = {e=>setDateFrom(e.target.value)}/>
+                                                value = {dateFrom} placeholder="ex)2021-01-01" onChange = {e=>setDateFrom(e.target.value)}/>
                             </div>
                         </div>
                                         
@@ -202,7 +132,7 @@ const NorthAuth = () => {
                             <p style={{ width: "95%", fontSize: "20px", fontWeight: "bold", }}>To</p>
                             <div class="dateCollection_selectDate_wrap">
                                 <Input style={{ textAlign: "center", width: "50%", marginLeft: "auto", marginRight: "auto", marginBottom: "5px", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                                                value = {dateTo} placeholder="2021-01-31" onChange = {e=>setDateTo(e.target.value)}/>
+                                                value = {dateTo} placeholder="ex)2021-01-31" onChange = {e=>setDateTo(e.target.value)}/>
                             </div>
                         </div>
                         <div style={{ marginTop: "20px", display: "inline-block", }}>
@@ -215,8 +145,13 @@ const NorthAuth = () => {
                         <Button 
                             style={{ backgroundColor: "#6c5ce7", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                             onClick={()=>{
-                            setIsModalOn(!isModalOn);
-                            setIsCollectionOn(!isCollectionOn);
+                                if(dateFrom.length<10 || dateTo.length<10){
+                                    alert('날짜를 제대로 입력하지 않으셨습니다.');
+                                    setIsCollectionOn(false);
+                                    setIsModalOn(true);
+                                }
+                                setIsModalOn(!isModalOn);
+                                setIsCollectionOn(!isCollectionOn);
                         }}>확인</Button>
                     </ModalFooter>
                     </Modal>
@@ -238,7 +173,6 @@ const NorthAuth = () => {
                         onClick={()=>loadMore()}>Load More</Button>
                 </div>}
             </div>
-        </Form>}
 
         <S.TailWrapper>
             <div class="contactWrapper">

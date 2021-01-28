@@ -1,6 +1,6 @@
 // 이게 홈화면
 import React from 'react';
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom"
+import { Link, } from "react-router-dom"
 import * as S from './styled';
 import '../../index.css';
 import logo from "../flash.png";

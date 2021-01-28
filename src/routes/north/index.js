@@ -87,7 +87,7 @@ const North = ({history}) => {
                 <p style={{ fontSize: "18px", }}>topqr123q@gmail.com</p>
                 <hr style={{ marginTop: "20px", marginBottom: "20px", border: 0, borderTop: "1px solid #eee" }}></hr>
                 <div style={{ textAlign: "center", }}>
-                    <img src={logo} style={{ height: "40px", width: "40px", }} />
+                    <img alt="flashLogo" src={logo} style={{ height: "40px", width: "40px", }} />
                 </div>
                 <div class="copyrightWrapper">
                     Copyright © 2021 by &nbsp;
