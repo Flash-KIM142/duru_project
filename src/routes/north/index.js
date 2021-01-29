@@ -40,7 +40,7 @@ const North = ({history}) => {
                 <Link to="/" style={{ color: "black", }}>
                     두루 캠퍼스<br/>사역 보고
                 </Link>
-                {/* <div style={{ fontSize: "15px", fontWeight: "400", color: "#0080FF", marginTop: "5%", }}>북서울지부</div> */}
+                <div style={{ fontSize: "15px", fontWeight: "400", color: "#0080FF", marginTop: "5px", }}>북서울지부</div>
             </div>
 
             <Form style={{ marginTop:"10px"}}>

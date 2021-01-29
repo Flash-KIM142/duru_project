@@ -1,6 +1,5 @@
 import firebase from "../firebase";
 const db = firebase.collection("Test");
-var first = db.orderBy("date","desc").limit(2);
 
 class ReportsDataService {
     getAll() {

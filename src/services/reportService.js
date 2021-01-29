@@ -11,13 +11,6 @@ class ReportsDataService {
       return db.orderBy("date", "desc");
     }
 
-    // getNextReports() {
-    //   const ref = db.orderBy("date", "desc").startAfter(latestDoc || 0).limit(3);
-    //   const post = ref.get();
-    //   latestDoc = post.docs[post.docs.length-1];
-    //   return ref;
-    // }
-  
     create(reports) {
       return db.add(reports);
     }

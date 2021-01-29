@@ -94,20 +94,7 @@ textarea:-ms-input-placeholder {
     table-layout: fixed;
 }
 
-table {
-    width: 100%;
-    border-top: 1px solid #dee2e6;
-    border-collapse: collapse;
-    table-layout: fixed;
-    padding: 15px;
-}
 
-th, td{
-    border-bottom: 1px solid #dee2e6;
-    padding: 10px;
-    table-layout: fixed;
-
-}
 
 .tableName{
     display: inline-flex;
@@ -225,9 +212,10 @@ th, td{
 }
 
 .buttonWrapper {
-    display: flex;
+    /* display: inline-block; */
     margin-left: auto;
     margin-right: auto;
+    height: 45px;
     /* width: */
 }
 
@@ -240,6 +228,9 @@ th, td{
     background-color: #fafafa;
     padding: 15px;
     margin-top: 10px;
+
+    width: auto;
+
 }
 
 select {
@@ -317,11 +308,11 @@ select {
     align-items:left;
     justify-content: left;
 
-    padding: 11%;
-    /* margin: 11%; */
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 40px;
     width:100%;
-    height: 20%;
-    /* height: 200px; */
+    height: 170px;
 
     background-color: #EBF3FF;
     background-image: url('routes/duruproject_headImage.png');    
@@ -330,6 +321,23 @@ select {
     background-size: contain; 
 
   }
+  @media (min-width: 800px) {
+      .headWrapper {
+        display: block;
+        margin: 0 auto;
+        font-size: 35px;
+        font-weight: bold;
+
+
+        padding-top: 70px;
+        padding-bottom: 70px;
+        padding-left: 100px;
+        padding-right: 80px;
+        width: auto;
+        height: 260px;
+      }
+  }
+
   .headWrapper:hover{
       color:white;
   }
@@ -425,6 +433,77 @@ select {
     font-size: 18px;
     width: 100%;
     padding: 5px;
+    color: #585858;
 
     /* border-top: 0.5px dotted #D8D8D8; */
+}
+
+.deleteBtn {
+    display: inline-flex;
+    float: right;
+
+    background-color: #F781BE;
+    color: white;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 0.5px solid #D8D8D8;
+    
+    padding: 5px;
+    /* padding: 0.375rem 0.75rem; */
+}
+
+.pagination {
+    margin: 40px 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    list-style: none;
+}
+
+.paginationItemSelect {
+    min-width: 26px;
+    color: #3f474d;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.paginationItemNonSelect {
+    min-width: 26px;
+    color: #828c94;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.noticeBody {
+    width: auto;
+    padding: 15px;
+}
+
+.noticeContent {
+    width: auto;
+}
+
+.noticeContentTitle {
+    font-size: 25px;
+    font-weight: bold;
+
+    padding-bottom: 10px;
+}
+
+.noticeContentDescription {
+    white-space: pre-line;
+
+    font-size: 18px;
+
+    padding: 15px;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 0.5px solid #D8D8D8;
 }

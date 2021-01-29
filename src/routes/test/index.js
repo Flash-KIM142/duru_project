@@ -14,7 +14,6 @@ const Test = () => {
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
     const [data,setData] = useState([]);
-    const [limit, setLimit] = useState(5);
     const [isUpdated,setIsUpdated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [editOn, setEditOn] = useState(false);
@@ -23,6 +22,8 @@ const Test = () => {
     const toggleModal = () => setIsModalOn(!isModalOn);
     const [isCollectionOn, setIsCollectionOn] = useState(false);
     const toggleCollection = () => setIsCollectionOn(!isCollectionOn);
+    const [isNoticeOn, setIsNoticeOn] = useState(false);
+    const toggleNotice = () => setIsNoticeOn(!isNoticeOn);
 
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
@@ -63,7 +64,7 @@ const Test = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('Test').orderBy("date", "desc").limit(5)
+        firebase.collection('Test').orderBy("date", "desc")
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();
@@ -77,7 +78,6 @@ const Test = () => {
                     month: date.getMonth()+1,
                     date: date.getDate(),
                     id: id,
-                    isOpen: temp.isOpen,
                 })
             })
             console.log(reports);
@@ -89,35 +89,13 @@ const Test = () => {
         setIsUpdated(false);
     }, [isUpdated])
 
-    const loadMore = () => {
-        let nextReports = [];
-        firebase.collection('Test').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
-            querySnapshot.docs.forEach((doc)=>{
-                let temp = doc.data();
-                let id = doc.id;
-                let date = temp.date.toDate();
-
-                nextReports.push({
-                    name: temp.name,
-                    description: temp.description,
-                    year: date.getFullYear(),
-                    month: date.getMonth()+1,
-                    date: date.getDate(),
-                    id: id,
-                    isOpen: temp.isOpen,
-                })
-            })
-            setData(nextReports);
-            setLimit(c => c+5);
-        })
-    }
-
     return (
         <>
             <div class="headWrapper" >
                 <Link to="/" style={{ color: "black", }}>
                     두루 캠퍼스<br/>사역 보고
                 </Link>
+                <div style={{ fontSize: "15px", fontWeight: "400", color: "#0080FF", marginTop: "5px", }}>dev page</div>
             </div>
 
             <Form style={{ marginTop:"10px"}}>
@@ -145,9 +123,10 @@ const Test = () => {
 
             {/* 개별로 펼쳐지게 만들 table */}
             <Reports data={data} />
-
+            
+            {/* 모아보기 버튼 */}
             <div class="buttonWrapper">
-                <div style={{ margin: "4px" }}>
+                <div style={{ paddingLeft: "20px", float: "left", }}>
                     <Button style={{ backgroundColor: "#a29bfe", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                         onClick={()=>setIsModalOn(!isModalOn)}>모아보기</Button>
                 </div>
@@ -203,12 +182,34 @@ const Test = () => {
                             <Button style={{ backgroundColor: "#fe2e64", border: "none", }}onClick={()=>setIsCollectionOn(false)}>닫기</Button>
                         </ModalFooter>
                     </Modal>
+                    
+                    {/* 공지사항 버튼 */}
+                    <div style={{ paddingRight: "20px", float: "right", display: "inline-block", }}>
+                        <Button style={{ backgroundColor: "#ffaf40", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                            onClick={()=>setIsNoticeOn(!isNoticeOn)}>공지사항</Button>
+                    </div>
+                    <Modal isOpen={isNoticeOn} toggle={toggleNotice}>
+                        <ModalHeader toggle={toggleNotice}>
+                            <div style={{ fontSize: "25px", fontWeight: "bolder", color: "#57606f", }}>공지사항</div>
+                        </ModalHeader>
 
-                {data && <div style={{ margin: "4px"}}>
-                    <Button color="success" 
-                        style={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
-                        onClick={()=>loadMore()}>Load More</Button>
-                </div>}
+                        <div class="noticeBody">
+                            <div class="noticeContent">
+                                <div class="noticeContentTitle">
+                                    삭제 버튼
+                                </div>
+                                <div class="noticeContentDescription">
+                                    삭제 버튼을 누른 이후에 새로고침하면 해당 아이템이 삭제된 것을 확인할 수 있습니다.
+                                </div>
+                            </div>
+                        </div>
+
+                        <ModalFooter>
+                            <Button 
+                                style={{ backgroundColor: "#f53b57", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
+                                onClick={()=>setIsNoticeOn(false)}>닫기</Button>
+                        </ModalFooter>
+                    </Modal>
             </div>
 
         <S.TailWrapper>
@@ -307,3 +308,29 @@ export default Test;
 //     ))}
 // </tbody>
 // </Table>
+
+
+
+// const [limit, setLimit] = useState(5);
+// const loadMore = () => {
+//     let nextReports = [];
+//     firebase.collection('Test').orderBy("date","desc").limit(limit+5).get().then((querySnapshot)=>{
+//         querySnapshot.docs.forEach((doc)=>{
+//             let temp = doc.data();
+//             let id = doc.id;
+//             let date = temp.date.toDate();
+
+//             nextReports.push({
+//                 name: temp.name,
+//                 description: temp.description,
+//                 year: date.getFullYear(),
+//                 month: date.getMonth()+1,
+//                 date: date.getDate(),
+//                 id: id,
+//                 isOpen: temp.isOpen,
+//             })
+//         })
+//         setData(nextReports);
+//         setLimit(c => c+5);
+//     })
+// }

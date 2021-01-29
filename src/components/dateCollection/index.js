@@ -44,7 +44,7 @@ const DateTable = ({ dateFrom, dateTo }) => {
                         </tr>
                         <tr key={key} style={{ whiteSpace: "pre-line", }}>
                             <div class="dateCollectionDescription">
-                                <td>{value.description}</td>
+                                {value.description}
                             </div>
                         </tr>
                         <br/>
