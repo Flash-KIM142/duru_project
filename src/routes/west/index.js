@@ -20,7 +20,7 @@ const West = ({history}) => {
         name: name,
         description: description,
         date: date,
-        // isOpen: false,
+        campus: "west",
         }).then(()=>{
         // console.log("Created new item successfully!");
         setIsUpdated(true);

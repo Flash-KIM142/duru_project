@@ -438,6 +438,24 @@ select {
     /* border-top: 0.5px dotted #D8D8D8; */
 }
 
+
+
+.editBtn {
+    display: inline-flex;
+    float: right;
+
+    background-color: #51f575;
+    color: white;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 0.5px solid #D8D8D8;
+    
+    padding: 5px;
+}
+
 .deleteBtn {
     display: inline-flex;
     float: right;
@@ -452,7 +470,6 @@ select {
     border: 0.5px solid #D8D8D8;
     
     padding: 5px;
-    /* padding: 0.375rem 0.75rem; */
 }
 
 .pagination {

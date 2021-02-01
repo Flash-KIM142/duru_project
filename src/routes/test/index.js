@@ -8,7 +8,8 @@ import firebase from "../../firebase";
 import '../../index.css';
 import logo from "../flash.png";
 import DateTable from '../../components/dateCollection';
-import Reports from '../../components/report'
+import Reports from '../../components/report';
+import Notice from '../../components/notice';
 
 const Test = () => {
     const [name,setName] = useState('');
@@ -34,6 +35,7 @@ const Test = () => {
             name: name,
             description: description,
             date: date,
+            campus: "test",
         }).then(()=>{
             setIsUpdated(true);
         }).catch((err)=>{
@@ -78,9 +80,10 @@ const Test = () => {
                     month: date.getMonth()+1,
                     date: date.getDate(),
                     id: id,
+                    campus: temp.campus,
                 })
             })
-            console.log(reports);
+            // console.log(reports);
             setData(reports);
         });
         setLoading(false);
@@ -193,16 +196,7 @@ const Test = () => {
                             <div style={{ fontSize: "25px", fontWeight: "bolder", color: "#57606f", }}>공지사항</div>
                         </ModalHeader>
 
-                        <div class="noticeBody">
-                            <div class="noticeContent">
-                                <div class="noticeContentTitle">
-                                    삭제 버튼
-                                </div>
-                                <div class="noticeContentDescription">
-                                    삭제 버튼을 누른 이후에 새로고침하면 해당 아이템이 삭제된 것을 확인할 수 있습니다.
-                                </div>
-                            </div>
-                        </div>
+                        <Notice />
 
                         <ModalFooter>
                             <Button 

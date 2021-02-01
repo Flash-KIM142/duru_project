@@ -9,6 +9,7 @@ import '../../index.css';
 import logo from '../flash.png';
 import DateTable from '../../components/dateCollection/north';
 import Reports from '../../components/report'
+import Notice from "../../components/notice";
 
 const NorthAuth = () => {
     const [name,setName] = useState('');
@@ -66,6 +67,7 @@ const NorthAuth = () => {
                     month: date.getMonth()+1,
                     date: date.getDate(),
                     id: id,
+                    campus: temp.campus,
                 })
             })
             setData(reports);
@@ -150,7 +152,7 @@ const NorthAuth = () => {
                     </Modal>
                     
                     {/* 공지사항 버튼 */}
-                    <div style={{ paddingRight: "20px", float: "right", display: "inline-block", }}>
+                    {/* <div style={{ paddingRight: "20px", float: "right", display: "inline-block", }}>
                         <Button style={{ backgroundColor: "#ffaf40", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                             onClick={()=>setIsNoticeOn(!isNoticeOn)}>공지사항</Button>
                     </div>
@@ -159,23 +161,14 @@ const NorthAuth = () => {
                             <div style={{ fontSize: "25px", fontWeight: "bolder", color: "#57606f", }}>공지사항</div>
                         </ModalHeader>
 
-                        <div class="noticeBody">
-                            <div class="noticeContent">
-                                <div class="noticeContentTitle">
-                                    삭제 버튼
-                                </div>
-                                <div class="noticeContentDescription">
-                                    삭제 버튼을 누른 이후에 새로고침하면 해당 아이템이 삭제된 것을 확인할 수 있습니다.
-                                </div>
-                            </div>
-                        </div>
+                        <Notice />
 
                         <ModalFooter>
                             <Button 
                                 style={{ backgroundColor: "#f53b57", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px", border: "0.5px solid #D8D8D8", }} 
                                 onClick={()=>setIsNoticeOn(false)}>닫기</Button>
                         </ModalFooter>
-                    </Modal>
+                    </Modal> */}
             </div>
 
         <S.TailWrapper>
