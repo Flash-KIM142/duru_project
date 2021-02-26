@@ -55,7 +55,7 @@ const SouthAuth = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('ReportsSouth').orderBy("date", "desc").limit(5)
+        firebase.collection('ReportsSouth').orderBy("date", "desc")
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();

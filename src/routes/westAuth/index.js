@@ -55,7 +55,7 @@ const WestAuth = () => {
     useEffect(()=>{
         const getReport = () => {
         let reports = [];
-        ReportDataServiceWest.getAll().limit(5).get().then(function(querySnapshot){
+        ReportDataServiceWest.getAll().get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
         let temp = doc.data();
         let id  = doc.id;

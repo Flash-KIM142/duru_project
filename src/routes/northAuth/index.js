@@ -53,7 +53,7 @@ const NorthAuth = () => {
 
     useEffect(() => {
         let reports = [];
-        firebase.collection('Reports').orderBy("date", "desc").limit(5)
+        firebase.collection('Reports').orderBy("date", "desc")
         .get().then((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
                 let temp = doc.data();
