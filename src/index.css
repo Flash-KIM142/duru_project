@@ -402,11 +402,13 @@ select {
 .reportsContentTextName {
     display: flex;
     justify-content: space-between;
-    text-align: center;
+    text-align: left;
     align-items: center;
     margin-bottom: 16px;
+    /* width: 354px; */
+    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden;
     font-size: 18px;
     color: #232323;
@@ -414,6 +416,9 @@ select {
 
 .reportsContentBtn {
     width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-left: 10px;
 }
 
 .reportsContentBtnImg {
