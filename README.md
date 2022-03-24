@@ -1,11 +1,10 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+# 두루 캠퍼스 선교회 사역 보고 사이트
 ```
-git add .
-git commit -m "message"
-git push -u origin master
+제가 활동했던 두루 캠퍼스 선교회의 사역 보고 사이트입니다.
+코로나로 인하여 대면 모임이 불가능했던 당시 정기적으로 진행해왔던 캠퍼스 리더 모임을 온라인으로 진행해야 하는 상황에서
+온라인 사역 보고 사이트의 필요성을 느껴 직접 제작했습니다.
+
+Frontend는 React를 이용해 개발했고 Backend는 Firebase를 이용해서 개발했습니다.
 ```
 
 ## 코드 변경 후 배포
